@@ -1,10 +1,6 @@
 
+import 'package:blackholecalculator/providers/screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-enum Screen {
-  charts,
-  calculator,
-}
 
 class ScreenNotifier extends StateNotifier<Screen> {
   ScreenNotifier() : super(Screen.charts);

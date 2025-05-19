@@ -1,3 +1,4 @@
+import 'package:blackholecalculator/providers/screen.dart';
 import 'package:blackholecalculator/providers/screen_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +13,7 @@ class AppDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final selectedScreen = ref.watch(screenProvider);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -23,15 +25,13 @@ class AppDrawer extends ConsumerWidget {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
-          ListTile(
-            leading: const Icon(Icons.calculate),
-            title: const Text('Calculator'),
-            onTap: () => _navigateToScreen(ref, Screen.calculator),
-          ),
-          ListTile(
-            leading: const Icon(Icons.bar_chart),
-            title: const Text('Charts'),
-            onTap: () => _navigateToScreen(ref, Screen.charts),
+          ...Screen.values.map(
+            (screen) => ListTile(
+              selected: selectedScreen == screen,
+              leading: Icon(screen.icon),
+              title: Text(screen.title),
+              onTap: () => _navigateToScreen(ref, screen),
+            ),
           ),
         ],
       ),

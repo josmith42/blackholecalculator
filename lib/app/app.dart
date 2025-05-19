@@ -1,5 +1,6 @@
 import 'package:blackholecalculator/app/app_drawer.dart';
 import 'package:blackholecalculator/app/theme.dart';
+import 'package:blackholecalculator/providers/screen.dart';
 import 'package:blackholecalculator/providers/screen_provider.dart';
 import 'package:blackholecalculator/screens/calculator_screen.dart';
 import 'package:blackholecalculator/screens/charts_screen.dart';
@@ -17,7 +18,7 @@ class App extends ConsumerWidget {
       theme: appLightTheme,
       darkTheme: appDarkTheme,
       home: Scaffold(
-        appBar: AppBar(title: Text('Black Hole app')),
+        appBar: AppBar(title: Text(screen.title)),
         drawer: const AppDrawer(),
         body: SafeArea(
           child: switch (screen) {
