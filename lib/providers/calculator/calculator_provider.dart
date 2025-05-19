@@ -12,7 +12,7 @@ class CalculatorNotifier extends StateNotifier<CalculatorViewModel> {
     state = state.copyWith(mass: MassMeasurement(value, state.mass.defaultUnit));
   }
 
-  void setMassUnit(MassUnit? unit) {
+  void setMassUnit(Unit<Mass>? unit) {
     if (unit == null) return;
     state = state.copyWith(
       mass: state.mass.butAs(unit) as MassMeasurement,
