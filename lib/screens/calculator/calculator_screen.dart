@@ -12,7 +12,7 @@ class CalculatorScreen extends StatelessWidget {
         spacing: 8,
         children: [
           CalculatorRow(title: "Mass"),
-          CalculatorRow(title: "Schwarzschild radius"),
+          // CalculatorRow(title: "Schwarzschild radius"),
         ],
       ),
     );
