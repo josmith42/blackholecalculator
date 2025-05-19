@@ -57,6 +57,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.2"
+  fling_units:
+    dependency: "direct main"
+    description:
+      name: fling_units
+      sha256: "30ab2728439853af83e3ea2aad00445a24f7bca9c428db74fdc1e69738155ed1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.6"
   flutter:
     dependency: "direct main"
     description: flutter
