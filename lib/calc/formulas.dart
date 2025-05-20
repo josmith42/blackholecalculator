@@ -2,8 +2,8 @@
 
 import 'package:fling_units/fling_units.dart';
 
-final gravitationalConstant = 6.67430e-11;
-final speedOfLight = 299792458.0;
+final gravitationalConstant = 6.6743015e-11;
+final speedOfLight = 299_792_458.0;
 final schwarzschildConstant = 2 * gravitationalConstant / (speedOfLight * speedOfLight);
 
 Measurement<Distance> schwarzschildRadiusFormula(
