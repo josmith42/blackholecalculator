@@ -13,6 +13,6 @@ class LightYear extends Unit<Distance> {
 
 const _lightYears = LightYear();
 const lightYears = _lightYears;
-extension LightYearExtension on double {
+extension LightYearExtension on num {
   DistanceMeasurement get lightYears => DistanceMeasurement(this, _lightYears);
 }

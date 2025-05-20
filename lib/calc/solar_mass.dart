@@ -14,6 +14,6 @@ class SolarMass extends Unit<Mass> {
 const _solarMasses = SolarMass();
 const solarMasses = _solarMasses;
 
-extension SolarMassExtension on double {
+extension SolarMassExtension on num {
   MassMeasurement get solarMasses => MassMeasurement(this, _solarMasses);
 }

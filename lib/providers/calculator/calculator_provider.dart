@@ -1,3 +1,4 @@
+import 'package:blackholecalculator/calc/formulas.dart';
 import 'package:blackholecalculator/calc/solar_mass.dart';
 import 'package:blackholecalculator/providers/calculator/calculator_model.dart';
 import 'package:fling_units/fling_units.dart';
@@ -14,7 +15,8 @@ class CalculatorNotifier extends StateNotifier<CalculatorViewModel> {
 
   void setMassValue(String userValue) {
     final value = double.tryParse(userValue);
-    if (value == null) return; // todo handle error
+    if (value == null) return; // todo handle errormass
+    _updateValuesFromMass(MassMeasurement(value, state.mass.defaultUnit));
     state = state.copyWith(
       mass: MassMeasurement(value, state.mass.defaultUnit),
     );
@@ -40,6 +42,14 @@ class CalculatorNotifier extends StateNotifier<CalculatorViewModel> {
     if (unit == null) return;
     state = state.copyWith(
       schwarzschildRadius: state.schwarzschildRadius.butAs(unit),
+    );
+  }
+
+  void _updateValuesFromMass(Measurement<Mass> newMass) {
+    final schwarzschildRadius = schwarzschildRadiusFormula(newMass);
+    state = state.copyWith(
+      mass: newMass,
+      schwarzschildRadius: schwarzschildRadius.butAs(state.schwarzschildRadius.defaultUnit),
     );
   }
 }
