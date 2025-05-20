@@ -1,4 +1,8 @@
+import 'package:blackholecalculator/calc/astronomical_unit.dart';
+import 'package:blackholecalculator/calc/earth_mass.dart';
 import 'package:blackholecalculator/calc/light_year.dart';
+import 'package:blackholecalculator/calc/planck_length.dart';
+import 'package:blackholecalculator/calc/planck_mass.dart';
 import 'package:blackholecalculator/calc/solar_mass.dart';
 import 'package:blackholecalculator/providers/calculator/calculator_provider.dart';
 import 'package:blackholecalculator/screens/calculator/calculator_row.dart';
@@ -20,7 +24,7 @@ class CalculatorScreen extends ConsumerWidget {
           CalculatorRow<Mass>(
             title: "Mass",
             measurement: calculatorModel.mass,
-            units: [kilo.grams, tonnes, solarMasses],
+            units: [planckMasses, kilo.grams, tonnes, earthMasses, solarMasses],
             onValueChanged:
                 (value) =>
                     ref.read(calculatorProvider.notifier).setMassValue(value),
@@ -31,7 +35,15 @@ class CalculatorScreen extends ConsumerWidget {
           CalculatorRow<Distance>(
             title: "Schwarzschild radius",
             measurement: calculatorModel.schwarzschildRadius,
-            units: [kilo.meters, meters, miles, lightYears],
+            units: [
+              planckLengths,
+              nano.meters,
+              meters,
+              kilo.meters,
+              miles,
+              astronomicalUnits,
+              lightYears,
+            ],
             onValueChanged:
                 (value) => ref
                     .read(calculatorProvider.notifier)
