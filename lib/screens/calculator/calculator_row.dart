@@ -13,17 +13,34 @@ class CalculatorRow extends ConsumerStatefulWidget {
 }
 
 class CalculatorRowState extends ConsumerState<CalculatorRow> {
-  final TextEditingController controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
 
-  CalculatorNotifier get _calculatorNotifier => ref.read(calculatorProvider.notifier);
+  CalculatorNotifier get _calculatorNotifier =>
+      ref.read(calculatorProvider.notifier);
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus) {
+        _controller.selection = TextSelection(
+          baseOffset: 0,
+          extentOffset: _controller.text.characters.length,
+        );
+      } else {
+        _calculatorNotifier.setMassValue(_controller.text);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(calculatorProvider);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (state.massValue != controller.text) {
-        controller.text = state.massValue;
+      if (state.massValue != _controller.text) {
+        _controller.text = state.massValue;
       }
     });
 
@@ -32,7 +49,8 @@ class CalculatorRowState extends ConsumerState<CalculatorRow> {
       children: [
         Expanded(
           child: TextField(
-            controller: controller,
+            controller: _controller,
+            focusNode: _focusNode,
             onSubmitted: (value) {
               _calculatorNotifier.setMassValue(value);
             },
@@ -65,7 +83,8 @@ class CalculatorRowState extends ConsumerState<CalculatorRow> {
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 }
