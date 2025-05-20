@@ -1,3 +1,4 @@
+import 'package:blackholecalculator/calc/light_year.dart';
 import 'package:blackholecalculator/calc/solar_mass.dart';
 import 'package:blackholecalculator/providers/calculator/calculator_provider.dart';
 import 'package:blackholecalculator/screens/calculator/calculator_row.dart';
@@ -14,16 +15,12 @@ class CalculatorScreen extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
-        spacing: 8,
+        spacing: 12,
         children: [
           CalculatorRow<Mass>(
             title: "Mass",
             measurement: calculatorModel.mass,
-            units: [
-              kilo.grams,
-              tonnes,
-              solarMasses,
-            ],
+            units: [kilo.grams, tonnes, solarMasses],
             onValueChanged:
                 (value) =>
                     ref.read(calculatorProvider.notifier).setMassValue(value),
@@ -31,7 +28,19 @@ class CalculatorScreen extends ConsumerWidget {
                 (unit) =>
                     ref.read(calculatorProvider.notifier).setMassUnit(unit),
           ),
-          // CalculatorRow(title: "Schwarzschild radius"),
+          CalculatorRow(
+            title: "Schwarzschild radius",
+            measurement: calculatorModel.schwarzschildRadius,
+            units: [kilo.meters, meters, miles, lightYears],
+            onValueChanged:
+                (value) => ref
+                    .read(calculatorProvider.notifier)
+                    .setSchwarzschildRadiusValue(value),
+            onUnitChanged:
+                (unit) => ref
+                    .read(calculatorProvider.notifier)
+                    .setSchwarzschildRadiusUnit(unit),
+          ),
         ],
       ),
     );
