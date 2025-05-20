@@ -70,7 +70,7 @@ class CalculatorRowState<T extends Dimension> extends State<CalculatorRow<T>> {
               widget.units
                   .map(
                     (unit) => DropdownMenuEntry<Unit<T>>(
-                      label: unit.name,
+                      label: unit.toString(),
                       value: unit,
                     ),
                   )
