@@ -6,7 +6,7 @@ class SolarMass extends Unit<Mass> {
   const SolarMass()
     : super(
         name: 'M☉',
-        unitMultiplier: 1.9885e33,
+        unitMultiplier: 1.988416e33, // grams - https://en.wikipedia.org/wiki/Solar_mass
         prefix: const MeasurementPrefix.unit(),
       );
 }
