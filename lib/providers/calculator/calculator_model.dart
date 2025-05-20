@@ -2,16 +2,19 @@
 import 'package:fling_units/fling_units.dart';
 
 class CalculatorViewModel {
-  final MassMeasurement mass;
-  String get massValue => mass.defaultValue.toString();
+  final Measurement<Mass> mass;
 
   CalculatorViewModel({required this.mass});
 
   CalculatorViewModel copyWith({
-    MassMeasurement? mass,
+    Measurement<Mass>? mass,
   }) {
     return CalculatorViewModel(
       mass: mass ?? this.mass,
     );
   }
+}
+
+extension MeasurementExtension<T extends Dimension> on Measurement<T> {
+  String get defaultValueText => defaultValue.toString();
 }

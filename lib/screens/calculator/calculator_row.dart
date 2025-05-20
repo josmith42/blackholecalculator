@@ -1,23 +1,29 @@
-import 'package:blackholecalculator/providers/calculator/calculator_provider.dart';
-import 'package:blackholecalculator/screens/calculator/mass_label.dart';
+import 'package:blackholecalculator/providers/calculator/calculator_model.dart';
+import 'package:fling_units/fling_units.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CalculatorRow extends ConsumerStatefulWidget {
-  const CalculatorRow({super.key, required this.title});
-
+class CalculatorRow<T extends Dimension> extends StatefulWidget {
+  const CalculatorRow({
+    super.key,
+    required this.title,
+    required this.measurement,
+    required this.units,
+    required this.onValueChanged,
+    required this.onUnitChanged,
+  });
   final String title;
+  final Measurement<T> measurement;
+  final List<Unit<T>> units;
+  final void Function(String) onValueChanged;
+  final void Function(Unit<T>) onUnitChanged;
 
   @override
-  ConsumerState<CalculatorRow> createState() => CalculatorRowState();
+  CalculatorRowState<T> createState() => CalculatorRowState<T>();
 }
-
-class CalculatorRowState extends ConsumerState<CalculatorRow> {
+class CalculatorRowState<T extends Dimension> extends State<CalculatorRow<T>> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
-  CalculatorNotifier get _calculatorNotifier =>
-      ref.read(calculatorProvider.notifier);
 
   @override
   void initState() {
@@ -29,18 +35,16 @@ class CalculatorRowState extends ConsumerState<CalculatorRow> {
           extentOffset: _controller.text.characters.length,
         );
       } else {
-        _calculatorNotifier.setMassValue(_controller.text);
+        widget.onValueChanged(_controller.text);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(calculatorProvider);
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (state.massValue != _controller.text) {
-        _controller.text = state.massValue;
+      if (widget.measurement.defaultValueText != _controller.text) {
+        _controller.text = widget.measurement.defaultValueText;
       }
     });
 
@@ -51,30 +55,29 @@ class CalculatorRowState extends ConsumerState<CalculatorRow> {
           child: TextField(
             controller: _controller,
             focusNode: _focusNode,
-            onSubmitted: (value) {
-              _calculatorNotifier.setMassValue(value);
-            },
+            onSubmitted: widget.onValueChanged,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: widget.title,
             ),
           ),
         ),
-        DropdownMenu<MassLabel>(
-          initialSelection: MassLabel.from(state.mass.defaultUnit),
+        DropdownMenu<Unit<T>>(
+          initialSelection: widget.measurement.defaultUnit,
           width: 100,
           label: const Text('Unit'),
           dropdownMenuEntries:
-              MassLabel.values
+              widget.units
                   .map(
-                    (label) => DropdownMenuEntry<MassLabel>(
-                      label: label.label,
-                      value: label,
+                    (unit) => DropdownMenuEntry<Unit<T>>(
+                      label: unit.name,
+                      value: unit,
                     ),
                   )
                   .toList(),
           onSelected: (value) {
-            _calculatorNotifier.setMassUnit(value?.unit);
+            if (value == null) return;
+            widget.onUnitChanged(value);
           },
         ),
       ],
