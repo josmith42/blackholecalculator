@@ -13,3 +13,11 @@ Measurement<Distance> schwarzschildRadiusFormula(
   // https://en.wikipedia.org/wiki/Schwarzschild_radius
   return (mass.butAs(kilo.grams).defaultValue * schwarzschildConstant).meters;
 }
+
+Measurement<Mass> massFromSchwarzschildRadius(
+  Measurement<Distance> radius,
+) {
+  // Rearranging the Schwarzschild radius formula to find mass: m = Rc^2/(2G)
+  // https://en.wikipedia.org/wiki/Schwarzschild_radius
+  return (radius.butAs(meters).defaultValue / schwarzschildConstant).kilo.grams;
+}

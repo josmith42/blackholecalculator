@@ -17,9 +17,6 @@ class CalculatorNotifier extends StateNotifier<CalculatorViewModel> {
     final value = double.tryParse(userValue);
     if (value == null) return; // todo handle errormass
     _updateValuesFromMass(MassMeasurement(value, state.mass.defaultUnit));
-    state = state.copyWith(
-      mass: MassMeasurement(value, state.mass.defaultUnit),
-    );
   }
 
   void setMassUnit(Unit<Mass>? unit) {
@@ -30,12 +27,10 @@ class CalculatorNotifier extends StateNotifier<CalculatorViewModel> {
   void setSchwarzschildRadiusValue(String userValue) {
     final value = double.tryParse(userValue);
     if (value == null) return; // todo handle error
-    state = state.copyWith(
-      schwarzschildRadius: DistanceMeasurement(
-        value,
-        state.schwarzschildRadius.defaultUnit,
-      ),
-    );
+    final mass = massFromSchwarzschildRadius(
+      DistanceMeasurement(value, state.schwarzschildRadius.defaultUnit),
+    ).butAs(state.mass.defaultUnit);
+    _updateValuesFromMass(mass);
   }
 
   void setSchwarzschildRadiusUnit(Unit<Distance>? unit) {
