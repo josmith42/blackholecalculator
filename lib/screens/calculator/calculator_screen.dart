@@ -28,7 +28,7 @@ class CalculatorScreen extends ConsumerWidget {
                 (unit) =>
                     ref.read(calculatorProvider.notifier).setMassUnit(unit),
           ),
-          CalculatorRow(
+          CalculatorRow<Distance>(
             title: "Schwarzschild radius",
             measurement: calculatorModel.schwarzschildRadius,
             units: [kilo.meters, meters, miles, lightYears],
