@@ -45,6 +45,7 @@ class CalculatorRowState extends ConsumerState<CalculatorRow> {
         DropdownMenu<MassLabel>(
           initialSelection: MassLabel.from(state.mass.defaultUnit),
           width: 100,
+          label: const Text('Unit'),
           dropdownMenuEntries:
               MassLabel.values
                   .map(
