@@ -1,10 +1,11 @@
 
+import 'package:blackholecalculator/calc/solar_mass.dart';
 import 'package:blackholecalculator/providers/calculator/calculator_model.dart';
 import 'package:fling_units/fling_units.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CalculatorNotifier extends StateNotifier<CalculatorViewModel> {
-  CalculatorNotifier() : super(CalculatorViewModel(mass: 0.kilo.grams));
+  CalculatorNotifier() : super(CalculatorViewModel(mass: 0.0.solarMasses));
 
   void setMassValue(String userValue) {
     final value = double.tryParse(userValue);
