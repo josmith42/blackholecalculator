@@ -10,6 +10,7 @@ class CalculatorNotifier extends StateNotifier<CalculatorViewModel> {
         CalculatorViewModel(
           mass: 0.0.solarMasses,
           schwarzschildRadius: 0.0.meters,
+          lifetime: 0.0.seconds,
         ),
       );
 
@@ -40,11 +41,29 @@ class CalculatorNotifier extends StateNotifier<CalculatorViewModel> {
     );
   }
 
+  void setLifetimeValue(String userValue) {
+    final value = double.tryParse(userValue);
+    if (value == null) return; // todo handle error
+    final mass = massFromLifetime(
+      TimeMeasurement(value, state.lifetime.defaultUnit),
+    ).butAs(state.mass.defaultUnit);
+    _updateValuesFromMass(mass);
+  }
+
+  void setLifetimeUnit(Unit<Time>? unit) {
+    if (unit == null) return;
+    state = state.copyWith(lifetime: state.lifetime.butAs(unit));
+  }
+
   void _updateValuesFromMass(Measurement<Mass> newMass) {
-    final schwarzschildRadius = schwarzschildRadiusFormula(newMass);
+    final schwarzschildRadius = schwarzschildRadiusFromMass(newMass);
+    final lifetime = lifetimeFromMass(newMass);
     state = state.copyWith(
       mass: newMass,
-      schwarzschildRadius: schwarzschildRadius.butAs(state.schwarzschildRadius.defaultUnit),
+      schwarzschildRadius: schwarzschildRadius.butAs(
+        state.schwarzschildRadius.defaultUnit,
+      ),
+      lifetime: lifetime.butAs(state.lifetime.defaultUnit),
     );
   }
 }
