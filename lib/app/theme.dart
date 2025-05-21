@@ -12,15 +12,15 @@ final appDarkColorScheme = ColorScheme.fromSeed(
 final appLightTheme = ThemeData(
   colorScheme: appLightColorScheme,
   appBarTheme: AppBarTheme().copyWith(
-    backgroundColor: appLightColorScheme.onPrimaryContainer,
-    foregroundColor: appLightColorScheme.primaryContainer,
+    backgroundColor: appLightColorScheme.onInverseSurface,
+    foregroundColor: appLightColorScheme.inverseSurface,
   ),
 );
 
 final appDarkTheme = ThemeData.dark().copyWith(
   colorScheme: appDarkColorScheme,
   appBarTheme: AppBarTheme().copyWith(
-    backgroundColor: appLightColorScheme.onPrimaryContainer,
-    foregroundColor: appLightColorScheme.primaryContainer,
+    backgroundColor: appDarkColorScheme.onInverseSurface,
+    foregroundColor: appDarkColorScheme.inverseSurface,
   ),
 );
