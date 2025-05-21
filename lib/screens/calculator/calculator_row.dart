@@ -1,5 +1,4 @@
 import 'package:blackholecalculator/providers/calculator/calculator_model.dart';
-import 'package:blackholecalculator/screens/calculator/unit_wrapper.dart';
 import 'package:fling_units/fling_units.dart';
 import 'package:flutter/material.dart';
 
@@ -63,22 +62,22 @@ class CalculatorRowState<T extends Dimension> extends State<CalculatorRow<T>> {
             ),
           ),
         ),
-        DropdownMenu<UnitWrapper<T>>(
-          initialSelection: UnitWrapper(widget.measurement.defaultUnit),
+        DropdownMenu<Unit<T>>(
+          initialSelection: widget.measurement.defaultUnit,
           width: 100,
           label: const Text('Unit'),
           dropdownMenuEntries:
               widget.units
                   .map(
-                    (unit) => DropdownMenuEntry<UnitWrapper<T>>(
+                    (unit) => DropdownMenuEntry<Unit<T>>(
                       label: unit.toString(),
-                      value: UnitWrapper(unit),
+                      value: unit,
                     ),
                   )
                   .toList(),
           onSelected: (value) {
             if (value == null) return;
-            widget.onUnitChanged(value.unit);
+            widget.onUnitChanged(value);
           },
         ),
       ],

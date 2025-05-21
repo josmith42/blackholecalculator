@@ -61,10 +61,10 @@ packages:
     dependency: "direct main"
     description:
       name: fling_units
-      sha256: "30ab2728439853af83e3ea2aad00445a24f7bca9c428db74fdc1e69738155ed1"
+      sha256: "3f24959689d461761570c175075097ea12acaff036df0f499b4ad04a010d9956"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.6"
+    version: "3.0.7"
   flutter:
     dependency: "direct main"
     description: flutter
