@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 enum Screen {
-  charts(title: 'Charts', icon: Icons.bar_chart),
-  calculator(title: 'Calculator', icon: Icons.calculate);
+  calculator(title: 'Calculator', icon: Icons.calculate),
+  charts(title: 'Charts', icon: Icons.bar_chart);
 
   final String title;
   final IconData icon;

@@ -3,7 +3,7 @@ import 'package:blackholecalculator/providers/screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ScreenNotifier extends StateNotifier<Screen> {
-  ScreenNotifier() : super(Screen.charts);
+  ScreenNotifier() : super(Screen.calculator);
 
   void setScreen(Screen screen) => state = screen;
 }

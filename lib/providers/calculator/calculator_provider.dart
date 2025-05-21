@@ -16,7 +16,7 @@ class CalculatorNotifier extends StateNotifier<CalculatorViewModel> {
 
   void setMassValue(String userValue) {
     final value = double.tryParse(userValue);
-    if (value == null) return; // todo handle errormass
+    if (value == null) return; // todo handle error
     _updateValuesFromMass(MassMeasurement(value, state.mass.defaultUnit));
   }
 

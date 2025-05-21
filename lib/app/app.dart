@@ -22,8 +22,8 @@ class App extends ConsumerWidget {
         drawer: const AppDrawer(),
         body: SafeArea(
           child: switch (screen) {
-            Screen.calculator => CalculatorScreen(),
             Screen.charts => ChartsScreen(),
+            Screen.calculator => CalculatorScreen(),
           },
         ),
       ),
