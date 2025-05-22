@@ -1,4 +1,6 @@
 import 'package:blackholecalculator/providers/calculator/calculator_model.dart';
+import 'package:blackholecalculator/widgets/bh_dropdown_menu.dart';
+import 'package:blackholecalculator/widgets/bh_text_field.dart';
 import 'package:fling_units/fling_units.dart';
 import 'package:flutter/material.dart';
 
@@ -20,25 +22,9 @@ class CalculatorRow<T extends Dimension> extends StatefulWidget {
   @override
   CalculatorRowState<T> createState() => CalculatorRowState<T>();
 }
+
 class CalculatorRowState<T extends Dimension> extends State<CalculatorRow<T>> {
   final TextEditingController _controller = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
-
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
-        _controller.selection = TextSelection(
-          baseOffset: 0,
-          extentOffset: _controller.text.characters.length,
-        );
-      } else {
-        widget.onValueChanged(_controller.text);
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,32 +38,20 @@ class CalculatorRowState<T extends Dimension> extends State<CalculatorRow<T>> {
       spacing: 4,
       children: [
         Expanded(
-          child: TextField(
+          child: BHTextField(
+            title: widget.title,
             controller: _controller,
-            focusNode: _focusNode,
-            onSubmitted: widget.onValueChanged,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: widget.title,
-            ),
+            onValueChanged: (value) {
+              widget.onValueChanged(value);
+            },
           ),
         ),
-        DropdownMenu<Unit<T>>(
+        BhDropdownMenu(
+          unitsList: widget.units,
           initialSelection: widget.measurement.defaultUnit,
           width: 100,
-          label: const Text('Unit'),
-          dropdownMenuEntries:
-              widget.units
-                  .map(
-                    (unit) => DropdownMenuEntry<Unit<T>>(
-                      label: unit.toString(),
-                      value: unit,
-                    ),
-                  )
-                  .toList(),
-          onSelected: (value) {
-            if (value == null) return;
-            widget.onUnitChanged(value);
+          onUnitChanged: (unit) {
+            widget.onUnitChanged(unit);
           },
         ),
       ],
@@ -87,7 +61,6 @@ class CalculatorRowState<T extends Dimension> extends State<CalculatorRow<T>> {
   @override
   void dispose() {
     _controller.dispose();
-    _focusNode.dispose();
     super.dispose();
   }
 }

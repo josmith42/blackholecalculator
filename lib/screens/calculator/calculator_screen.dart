@@ -1,11 +1,4 @@
-import 'package:blackholecalculator/calc/astronomical_unit.dart';
-import 'package:blackholecalculator/calc/earth_mass.dart';
-import 'package:blackholecalculator/calc/light_year.dart';
-import 'package:blackholecalculator/calc/planck_length.dart';
-import 'package:blackholecalculator/calc/planck_mass.dart';
-import 'package:blackholecalculator/calc/planck_time.dart';
-import 'package:blackholecalculator/calc/solar_mass.dart';
-import 'package:blackholecalculator/calc/years.dart';
+import 'package:blackholecalculator/calc/unit_lists.dart';
 import 'package:blackholecalculator/providers/calculator/calculator_provider.dart';
 import 'package:blackholecalculator/screens/calculator/calculator_row.dart';
 import 'package:fling_units/fling_units.dart';
@@ -26,7 +19,7 @@ class CalculatorScreen extends ConsumerWidget {
           CalculatorRow<Mass>(
             title: "Mass",
             measurement: calculatorModel.mass,
-            units: [planckMasses, kilo.grams, tonnes, earthMasses, solarMasses],
+            units: massUnitsList,
             onValueChanged:
                 (value) => ref.calculatorNotifier.setMassValue(value),
             onUnitChanged: (unit) => ref.calculatorNotifier.setMassUnit(unit),
@@ -34,15 +27,7 @@ class CalculatorScreen extends ConsumerWidget {
           CalculatorRow<Distance>(
             title: "Schwarzschild radius",
             measurement: calculatorModel.schwarzschildRadius,
-            units: [
-              planckLengths,
-              nano.meters,
-              meters,
-              kilo.meters,
-              miles,
-              astronomicalUnits,
-              lightYears,
-            ],
+            units: distanceUnitsList,
             onValueChanged:
                 (value) =>
                     ref.calculatorNotifier.setSchwarzschildRadiusValue(value),
@@ -50,10 +35,10 @@ class CalculatorScreen extends ConsumerWidget {
                 (unit) =>
                     ref.calculatorNotifier.setSchwarzschildRadiusUnit(unit),
           ),
-          CalculatorRow(
+          CalculatorRow<Time>(
             title: "Lifetime",
             measurement: calculatorModel.lifetime,
-            units: [planckTimes, seconds, minutes, hours, days, years],
+            units: timeUnitsList,
             onValueChanged:
                 (value) => ref.calculatorNotifier.setLifetimeValue(value),
             onUnitChanged:
