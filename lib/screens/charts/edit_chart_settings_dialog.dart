@@ -46,6 +46,7 @@ class _EditChartSettingsDialogState extends State<EditChartSettingsDialog> {
       title: Text('Chart Settings'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
+        spacing: 12,
         children: [
           BHTextField(title: 'Start Mass', controller: startValueController),
           BHTextField(title: 'End Mass', controller: endValueController),

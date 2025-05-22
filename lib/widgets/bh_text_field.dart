@@ -31,7 +31,7 @@ class _BHTextFieldState extends State<BHTextField> {
           extentOffset: widget._controller.text.characters.length,
         );
       } else {
-        widget.onValueChanged??(widget._controller.text);
+        widget.onValueChanged?.call(widget._controller.text);
       }
     });
   }
