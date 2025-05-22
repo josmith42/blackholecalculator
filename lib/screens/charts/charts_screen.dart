@@ -35,19 +35,20 @@ class _ChartsScreenState extends ConsumerState<ChartsScreen> {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 IconButton(
-                  onPressed: () async {
-                    final result = await showDialog(
+                  onPressed: () {
+                    showDialog(
                       context: context,
                       builder:
                           (context) => EditChartSettingsDialog<Mass>(
                             startValue: chartModel.startMass,
                             endValue: chartModel.endMass,
                             unitsList: massUnitsList,
+                            onSettingsSelected:
+                                (newSettings) => ref
+                                    .read(chartProvider.notifier)
+                                    .setChartData(newSettings),
                           ),
                     );
-                    if (result == null || result is! EditChartSettingsData<Mass>) return;
-                    final newChartData = result;
-                    ref.read(chartProvider.notifier).setChartData(newChartData);
                   },
                   icon: Icon(Icons.edit),
                 ),
@@ -74,7 +75,9 @@ class _ChartsScreenState extends ConsumerState<ChartsScreen> {
                       sideTitles: SideTitles(showTitles: false),
                     ),
                     bottomTitles: AxisTitles(
-                      axisNameWidget: Text('Mass (${chartModel.startMass.defaultUnit})'),
+                      axisNameWidget: Text(
+                        'Mass (${chartModel.startMass.defaultUnit})',
+                      ),
                       sideTitles: SideTitles(
                         showTitles: true,
                         reservedSize: 28,

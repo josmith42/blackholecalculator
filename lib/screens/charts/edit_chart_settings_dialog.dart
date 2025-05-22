@@ -10,11 +10,13 @@ class EditChartSettingsDialog<T extends Dimension> extends StatefulWidget {
     required this.startValue,
     required this.endValue,
     required this.unitsList,
+    required this.onSettingsSelected,
   });
 
   final Measurement<T> startValue;
   final Measurement<T> endValue;
   final List<Unit<T>> unitsList;
+  final void Function(EditChartSettingsData<T>) onSettingsSelected;
 
   @override
   State<StatefulWidget> createState() => _EditChartSettingsDialogState<T>();
@@ -59,13 +61,14 @@ class _EditChartSettingsDialogState<T extends Dimension>
         ),
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(
+            widget.onSettingsSelected(
               EditChartSettingsData<T>(
                 startValue: startValueController.text,
                 endValue: endValueController.text,
                 unit: unit ?? widget.startValue.defaultUnit,
               ),
             );
+            Navigator.of(context).pop();
           },
           child: Text('OK'),
         ),
