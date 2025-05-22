@@ -74,7 +74,7 @@ class _ChartsScreenState extends ConsumerState<ChartsScreen> {
                       sideTitles: SideTitles(showTitles: false),
                     ),
                     bottomTitles: AxisTitles(
-                      axisNameWidget: const Text('Mass (Solar Masses)'),
+                      axisNameWidget: Text('Mass (${chartModel.startMass.defaultUnit})'),
                       sideTitles: SideTitles(
                         showTitles: true,
                         reservedSize: 28,
