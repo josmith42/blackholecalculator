@@ -13,9 +13,6 @@ void showEditChartSettingsDialog<T extends Dimension>(
     context: context,
     builder: (context) => EditChartSettingsDialog(startValue: startMass, endValue: endMass, unitsList: unitsList),
   );
-
-  // startMassController.dispose();
-  // endMassController.dispose();
 }
 
 class EditChartSettingsDialog<T extends Dimension> extends StatefulWidget {
