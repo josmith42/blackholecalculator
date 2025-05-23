@@ -23,9 +23,22 @@ class _ChartsScreenState extends ConsumerState<ChartsScreen> {
     ref.read(appBarProvider.notifier).setActions([
       IconButton(
         onPressed: () {
-          // ref.read(chartProvider.notifier).resetChartData();
+          final chartModel = ref.read(chartProvider);
+          showDialog(
+            context: context,
+            builder:
+                (context) => EditChartSettingsDialog<Mass>(
+                  startValue: chartModel.startMass,
+                  endValue: chartModel.endMass,
+                  unitsList: massUnitsList,
+                  onSettingsSelected:
+                      (newSettings) => ref
+                          .read(chartProvider.notifier)
+                          .setChartData(newSettings),
+                ),
+          );
         },
-        icon: const Icon(Icons.edit),
+        icon: const Icon(Icons.settings),
       ),
     ]);
   }
@@ -40,32 +53,9 @@ class _ChartsScreenState extends ConsumerState<ChartsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Mass vs Schwarzschild Radius',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                IconButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder:
-                          (context) => EditChartSettingsDialog<Mass>(
-                            startValue: chartModel.startMass,
-                            endValue: chartModel.endMass,
-                            unitsList: massUnitsList,
-                            onSettingsSelected:
-                                (newSettings) => ref
-                                    .read(chartProvider.notifier)
-                                    .setChartData(newSettings),
-                          ),
-                    );
-                  },
-                  icon: Icon(Icons.edit),
-                ),
-              ],
+            Text(
+              'Mass vs Schwarzschild Radius',
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             SizedBox(height: 8),
             AspectRatio(
