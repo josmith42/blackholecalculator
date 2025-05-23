@@ -6,12 +6,14 @@ class BhDropdownMenu<T extends Dimension> extends StatelessWidget {
     super.key,
     required this.unitsList,
     required this.initialSelection,
+    required this.title,
     required this.onUnitChanged,
-    this.width
+    this.width,
   });
 
   final List<Unit<T>> unitsList;
   final Unit<T> initialSelection;
+  final String title;
   final void Function(Unit<T>) onUnitChanged;
   final double? width;
 
@@ -19,7 +21,7 @@ class BhDropdownMenu<T extends Dimension> extends StatelessWidget {
   Widget build(BuildContext context) => DropdownMenu<Unit<T>>(
     initialSelection: initialSelection,
     width: width,
-    label: const Text('Unit'),
+    label: Text(title),
     dropdownMenuEntries:
         unitsList
             .map(

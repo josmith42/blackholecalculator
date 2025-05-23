@@ -1,38 +1,37 @@
+import 'package:blackholecalculator/calc/unit_lists.dart';
 import 'package:blackholecalculator/providers/chart/edit_chart_settings_data.dart';
 import 'package:blackholecalculator/widgets/bh_dropdown_menu.dart';
 import 'package:blackholecalculator/widgets/bh_text_field.dart';
 import 'package:fling_units/fling_units.dart';
 import 'package:flutter/material.dart';
 
-class EditChartSettingsDialog<T extends Dimension> extends StatefulWidget {
+class EditChartSettingsDialog extends StatefulWidget {
   const EditChartSettingsDialog({
     super.key,
-    required this.startValue,
-    required this.endValue,
-    required this.unitsList,
+    required this.editChartSettingsData,
     required this.onSettingsSelected,
   });
 
-  final Measurement<T> startValue;
-  final Measurement<T> endValue;
-  final List<Unit<T>> unitsList;
-  final void Function(EditChartSettingsData<T>) onSettingsSelected;
+  final EditChartSettingsData editChartSettingsData;
+  final void Function(EditChartSettingsData) onSettingsSelected;
 
   @override
-  State<StatefulWidget> createState() => _EditChartSettingsDialogState<T>();
+  State<StatefulWidget> createState() => _EditChartSettingsDialogState();
 }
 
-class _EditChartSettingsDialogState<T extends Dimension>
-    extends State<EditChartSettingsDialog<T>> {
+class _EditChartSettingsDialogState extends State<EditChartSettingsDialog> {
   final startValueController = TextEditingController();
   final endValueController = TextEditingController();
-  Unit<T>? unit;
+  Unit<Mass>? massUnit;
+  Unit<Distance>? schwarzschildRadiusUnit;
 
   @override
   Widget build(BuildContext context) {
-    startValueController.text = widget.startValue.defaultValue.toString();
-    endValueController.text = widget.endValue.defaultValue.toString();
-    unit = widget.startValue.defaultUnit;
+    startValueController.text = widget.editChartSettingsData.startValue;
+    endValueController.text = widget.editChartSettingsData.endValue;
+    massUnit = widget.editChartSettingsData.massUnit;
+    schwarzschildRadiusUnit =
+        widget.editChartSettingsData.schwarzschildRadiusUnit;
 
     return AlertDialog(
       title: Text('Chart Settings'),
@@ -42,11 +41,25 @@ class _EditChartSettingsDialogState<T extends Dimension>
         children: [
           BHTextField(title: 'Start Mass', controller: startValueController),
           BHTextField(title: 'End Mass', controller: endValueController),
-          BhDropdownMenu(
-            unitsList: widget.unitsList,
-            initialSelection: widget.startValue.defaultUnit,
+          BhDropdownMenu<Mass>(
+            unitsList: massUnitsList,
+            initialSelection: massUnit ?? massUnitsList.first,
+            title: 'Mass Unit',
             onUnitChanged: (newUnit) {
-              unit = newUnit;
+              massUnit = newUnit;
+            },
+            width: double.infinity,
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          BhDropdownMenu(
+            unitsList: distanceUnitsList,
+            initialSelection:
+                schwarzschildRadiusUnit ?? distanceUnitsList.first,
+            title: 'Schwarzschild Radius Unit',
+            onUnitChanged: (newUnit) {
+              schwarzschildRadiusUnit = newUnit;
             },
             width: double.infinity,
           ),
@@ -62,10 +75,13 @@ class _EditChartSettingsDialogState<T extends Dimension>
         TextButton(
           onPressed: () {
             widget.onSettingsSelected(
-              EditChartSettingsData<T>(
+              EditChartSettingsData(
                 startValue: startValueController.text,
                 endValue: endValueController.text,
-                unit: unit ?? widget.startValue.defaultUnit,
+                massUnit: massUnit ?? widget.editChartSettingsData.massUnit,
+                schwarzschildRadiusUnit:
+                    schwarzschildRadiusUnit ??
+                    widget.editChartSettingsData.schwarzschildRadiusUnit,
               ),
             );
             Navigator.of(context).pop();

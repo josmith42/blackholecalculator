@@ -49,6 +49,7 @@ class CalculatorRowState<T extends Dimension> extends State<CalculatorRow<T>> {
         BhDropdownMenu(
           unitsList: widget.units,
           initialSelection: widget.measurement.defaultUnit,
+          title: 'Unit',
           width: 100,
           onUnitChanged: (unit) {
             widget.onUnitChanged(unit);

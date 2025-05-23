@@ -6,17 +6,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChartNotifier extends StateNotifier<ChartViewModel> {
   ChartNotifier()
-    : super(ChartViewModel(startMass: 1.solarMasses, endMass: 100.solarMasses));
+    : super(ChartViewModel(startMass: 1.solarMasses, endMass: 100.solarMasses, schwarzschildRadiusUnit: kilo.meters));
 
-  void setChartData(EditChartSettingsData<Mass> data) {
+  void setChartData(EditChartSettingsData data) {
     final startMass = double.tryParse(data.startValue);
     final endMass = double.tryParse(data.endValue);
 
     if (startMass == null || endMass == null) return; // todo handle error
 
     state = ChartViewModel(
-      startMass: Measurement(magnitude: startMass, defaultUnit: data.unit),
-      endMass: Measurement(magnitude: endMass, defaultUnit: data.unit),
+      startMass: Measurement(magnitude: startMass, defaultUnit: data.massUnit),
+      endMass: Measurement(magnitude: endMass, defaultUnit: data.massUnit),
+      schwarzschildRadiusUnit: data.schwarzschildRadiusUnit,
     );
   }
 }

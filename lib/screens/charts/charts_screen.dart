@@ -1,9 +1,9 @@
-import 'package:blackholecalculator/calc/unit_lists.dart';
 import 'package:blackholecalculator/providers/app/app_bar_provider.dart';
+import 'package:blackholecalculator/providers/calculator/calculator_model.dart';
 import 'package:blackholecalculator/providers/chart/chart_provider.dart';
+import 'package:blackholecalculator/providers/chart/edit_chart_settings_data.dart';
 import 'package:blackholecalculator/screens/charts/edit_chart_settings_dialog.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:fling_units/fling_units.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,10 +27,13 @@ class _ChartsScreenState extends ConsumerState<ChartsScreen> {
           showDialog(
             context: context,
             builder:
-                (context) => EditChartSettingsDialog<Mass>(
-                  startValue: chartModel.startMass,
-                  endValue: chartModel.endMass,
-                  unitsList: massUnitsList,
+                (context) => EditChartSettingsDialog(
+                  editChartSettingsData: EditChartSettingsData(
+                    startValue: chartModel.startMass.defaultValue.toString(),
+                    endValue: chartModel.endMass.defaultValueText,
+                    massUnit: chartModel.startMass.defaultUnit,
+                    schwarzschildRadiusUnit: chartModel.schwarzschildRadiusUnit,
+                  ),
                   onSettingsSelected:
                       (newSettings) => ref
                           .read(chartProvider.notifier)
@@ -88,7 +91,7 @@ class _ChartsScreenState extends ConsumerState<ChartsScreen> {
                       ),
                     ),
                     leftTitles: AxisTitles(
-                      axisNameWidget: const Text('Schwarzschild Radius (km)'),
+                      axisNameWidget: Text('Schwarzschild Radius (${chartModel.schwarzschildRadiusUnit})'),
                       sideTitles: SideTitles(
                         showTitles: true,
                         reservedSize: 40,
