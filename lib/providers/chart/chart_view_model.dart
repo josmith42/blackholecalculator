@@ -1,29 +1,35 @@
 import 'package:blackholecalculator/calc/formulas.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:blackholecalculator/providers/chart/chart_data.dart';
 import 'package:fling_units/fling_units.dart';
 
-const int chartPointsCount = 100;
 
 class ChartViewModel {
   final Measurement<Mass> startMass;
   final Measurement<Mass> endMass;
-  final Unit<Distance> schwarzschildRadiusUnit;
-  late final List<FlSpot> chartData;
+  late final ChartData<Distance> schwarzchildChartData;
+  late final ChartData<Time> lifetimeChartData;
 
   ChartViewModel({
     required this.startMass,
     required this.endMass,
-    required this.schwarzschildRadiusUnit,
+    required Unit<Distance> schwarzschildRadiusUnit,
+    required Unit<Time> lifetimeUnit,
   }) {
-    final interval = (endMass - startMass) / 100;
-    chartData = List.generate(chartPointsCount, (i) {
-      final value = startMass + (interval * i);
-      return FlSpot(
-        value.defaultValue,
-        schwarzschildRadiusFromMass(
-          value,
-        ).butAs(schwarzschildRadiusUnit).defaultValue,
-      );
-    });
+    schwarzchildChartData = ChartData<Distance>(
+      title: 'Mass vs Schwarzschild Radius',
+      startMass: startMass,
+      endMass: endMass,
+      dependentLabel: 'Schwarzschild Radius',
+      dependentUnit: schwarzschildRadiusUnit,
+      dependentValueFromMass: schwarzschildRadiusFromMass,
+    );
+    lifetimeChartData = ChartData<Time>(
+      title: 'Mass vs Lifetime',
+      startMass: startMass,
+      endMass: endMass,
+      dependentLabel: 'Lifetime',
+      dependentUnit: lifetimeUnit,
+      dependentValueFromMass: lifetimeFromMass,
+    );
   }
 }

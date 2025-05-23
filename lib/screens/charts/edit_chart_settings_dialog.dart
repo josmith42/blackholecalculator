@@ -24,6 +24,7 @@ class _EditChartSettingsDialogState extends State<EditChartSettingsDialog> {
   final endValueController = TextEditingController();
   Unit<Mass>? massUnit;
   Unit<Distance>? schwarzschildRadiusUnit;
+  Unit<Time>? lifetimeUnit;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class _EditChartSettingsDialogState extends State<EditChartSettingsDialog> {
     massUnit = widget.editChartSettingsData.massUnit;
     schwarzschildRadiusUnit =
         widget.editChartSettingsData.schwarzschildRadiusUnit;
+    lifetimeUnit = widget.editChartSettingsData.lifetimeUnit;
 
     return AlertDialog(
       title: Text('Chart Settings'),
@@ -50,9 +52,7 @@ class _EditChartSettingsDialogState extends State<EditChartSettingsDialog> {
             },
             width: double.infinity,
           ),
-          SizedBox(
-            height: 12,
-          ),
+          SizedBox(height: 12),
           BhDropdownMenu(
             unitsList: distanceUnitsList,
             initialSelection:
@@ -82,6 +82,8 @@ class _EditChartSettingsDialogState extends State<EditChartSettingsDialog> {
                 schwarzschildRadiusUnit:
                     schwarzschildRadiusUnit ??
                     widget.editChartSettingsData.schwarzschildRadiusUnit,
+                lifetimeUnit:
+                    lifetimeUnit ?? widget.editChartSettingsData.lifetimeUnit,
               ),
             );
             Navigator.of(context).pop();
