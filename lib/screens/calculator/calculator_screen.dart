@@ -15,38 +15,42 @@ class CalculatorScreen extends ConsumerWidget {
     final calculatorModel = ref.watch(calculatorProvider);
     return Container(
       padding: const EdgeInsets.all(16),
-      child: Column(
-        spacing: 12,
-        children: [
-          CalculatorRow<Mass>(
-            title: "Mass",
-            measurement: calculatorModel.mass,
-            units: massUnitsList,
-            onValueChanged:
-                (value) => ref.calculatorNotifier.setMassValue(value),
-            onUnitChanged: (unit) => ref.calculatorNotifier.setMassUnit(unit),
-          ),
-          CalculatorRow<Distance>(
-            title: "Schwarzschild radius",
-            measurement: calculatorModel.schwarzschildRadius,
-            units: distanceUnitsList,
-            onValueChanged:
-                (value) =>
-                    ref.calculatorNotifier.setSchwarzschildRadiusValue(value),
-            onUnitChanged:
-                (unit) =>
-                    ref.calculatorNotifier.setSchwarzschildRadiusUnit(unit),
-          ),
-          CalculatorRow<Time>(
-            title: "Lifetime",
-            measurement: calculatorModel.lifetime,
-            units: timeUnitsList,
-            onValueChanged:
-                (value) => ref.calculatorNotifier.setLifetimeValue(value),
-            onUnitChanged:
-                (unit) => ref.calculatorNotifier.setLifetimeUnit(unit),
-          ),
-        ],
+      alignment: Alignment.center,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 600),
+        child: Column(
+          spacing: 12,
+          children: [
+            CalculatorRow<Mass>(
+              title: "Mass",
+              measurement: calculatorModel.mass,
+              units: massUnitsList,
+              onValueChanged:
+                  (value) => ref.calculatorNotifier.setMassValue(value),
+              onUnitChanged: (unit) => ref.calculatorNotifier.setMassUnit(unit),
+            ),
+            CalculatorRow<Distance>(
+              title: "Schwarzschild radius",
+              measurement: calculatorModel.schwarzschildRadius,
+              units: distanceUnitsList,
+              onValueChanged:
+                  (value) =>
+                      ref.calculatorNotifier.setSchwarzschildRadiusValue(value),
+              onUnitChanged:
+                  (unit) =>
+                      ref.calculatorNotifier.setSchwarzschildRadiusUnit(unit),
+            ),
+            CalculatorRow<Time>(
+              title: "Lifetime",
+              measurement: calculatorModel.lifetime,
+              units: timeUnitsList,
+              onValueChanged:
+                  (value) => ref.calculatorNotifier.setLifetimeValue(value),
+              onUnitChanged:
+                  (unit) => ref.calculatorNotifier.setLifetimeUnit(unit),
+            ),
+          ],
+        ),
       ),
     );
   }
