@@ -1,4 +1,5 @@
 import 'package:blackholecalculator/calc/unit_lists.dart';
+import 'package:blackholecalculator/providers/app/app_bar_provider.dart';
 import 'package:blackholecalculator/providers/calculator/calculator_provider.dart';
 import 'package:blackholecalculator/screens/calculator/calculator_row.dart';
 import 'package:fling_units/fling_units.dart';
@@ -10,6 +11,7 @@ class CalculatorScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.read(appBarProvider.notifier).setActions([]);
     final calculatorModel = ref.watch(calculatorProvider);
     return Container(
       padding: const EdgeInsets.all(16),

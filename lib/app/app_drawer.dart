@@ -1,5 +1,5 @@
-import 'package:blackholecalculator/providers/screen.dart';
-import 'package:blackholecalculator/providers/screen_provider.dart';
+import 'package:blackholecalculator/providers/app/screen.dart';
+import 'package:blackholecalculator/providers/app/screen_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

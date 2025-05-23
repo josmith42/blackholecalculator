@@ -1,6 +1,6 @@
 import 'package:blackholecalculator/calc/unit_lists.dart';
+import 'package:blackholecalculator/providers/app/app_bar_provider.dart';
 import 'package:blackholecalculator/providers/chart/chart_provider.dart';
-import 'package:blackholecalculator/providers/chart/edit_chart_settings_data.dart';
 import 'package:blackholecalculator/screens/charts/edit_chart_settings_dialog.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fling_units/fling_units.dart';
@@ -17,6 +17,19 @@ class ChartsScreen extends ConsumerStatefulWidget {
 }
 
 class _ChartsScreenState extends ConsumerState<ChartsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(appBarProvider.notifier).setActions([
+      IconButton(
+        onPressed: () {
+          // ref.read(chartProvider.notifier).resetChartData();
+        },
+        icon: const Icon(Icons.edit),
+      ),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     final chartModel = ref.watch(chartProvider);
