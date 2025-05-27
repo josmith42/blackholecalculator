@@ -51,10 +51,25 @@ class BlackHoleChart<T extends Dimension> extends StatelessWidget {
                   ),
                   sideTitles: SideTitles(
                     showTitles: true,
-                    reservedSize: 40,
+                    reservedSize: 50,
                     maxIncluded: false,
+                    getTitlesWidget: (value, meta) {
+                      return Text(
+                        value.toStringAsExponential(1),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
+                    interval: chartData.yInterval,
                   ),
                 ),
+              ),
+              gridData: FlGridData(
+                show: true,
+                drawHorizontalLine: true,
+                horizontalInterval: chartData.yInterval,
               ),
             ),
           ),

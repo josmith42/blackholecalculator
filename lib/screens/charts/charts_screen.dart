@@ -58,7 +58,7 @@ class _ChartsScreenState extends ConsumerState<ChartsScreen> {
         child: Column(
           children: [
             BlackHoleChart(chartData: chartModel.schwarzchildChartData),
-            // BlackHoleChart(chartData: chartModel.lifetimeChartData),
+            BlackHoleChart(chartData: chartModel.lifetimeChartData),
           ],
         ),
       ),
