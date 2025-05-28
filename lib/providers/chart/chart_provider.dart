@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ChartNotifier extends StateNotifier<ChartViewModel> {
   ChartNotifier()
     : super(
-        ChartViewModel(
+        ChartViewModel.withDependentUnits(
           startMass: 1.solarMasses,
           endMass: 100.solarMasses,
           schwarzschildRadiusUnit: kilo.meters,
@@ -22,7 +22,7 @@ class ChartNotifier extends StateNotifier<ChartViewModel> {
 
     if (startMass == null || endMass == null) return; // todo handle error
 
-    state = ChartViewModel(
+    state = ChartViewModel.withDependentUnits(
       startMass: Measurement(magnitude: startMass, defaultUnit: data.massUnit),
       endMass: Measurement(magnitude: endMass, defaultUnit: data.massUnit),
       schwarzschildRadiusUnit: data.schwarzschildRadiusUnit,

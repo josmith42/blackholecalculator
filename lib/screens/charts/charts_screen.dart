@@ -4,7 +4,6 @@ import 'package:blackholecalculator/providers/chart/chart_provider.dart';
 import 'package:blackholecalculator/providers/chart/edit_chart_settings_data.dart';
 import 'package:blackholecalculator/screens/charts/edit_chart_settings_dialog.dart';
 import 'package:blackholecalculator/widgets/black_hole_chart.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

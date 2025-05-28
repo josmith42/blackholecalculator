@@ -9,9 +9,8 @@ class ChartData<T extends Dimension> {
   final Measurement<Mass> endMass;
   final String dependentLabel;
   final Unit<T> dependentUnit;
-  late final List<FlSpot> data;
-
-  late final double yInterval;
+  final List<FlSpot> data;
+  final double yInterval;
 
   ChartData({
     required this.title,
@@ -19,17 +18,36 @@ class ChartData<T extends Dimension> {
     required this.endMass,
     required this.dependentLabel,
     required this.dependentUnit,
+    required this.data,
+    required this.yInterval,
+  });
+
+  factory ChartData.withDependentFunction({
+    required String title,
+    required Measurement<Mass> startMass,
+    required Measurement<Mass> endMass,
+    required String dependentLabel,
+    required Unit<T> dependentUnit,
     required Measurement<T> Function(Measurement<Mass>) dependentValueFromMass,
   }) {
     final xInterval = (endMass - startMass) / chartPointsCount;
-    data = List.generate(chartPointsCount, (i) {
+    final data = List.generate(chartPointsCount, (i) {
       final value = startMass + (xInterval * i);
       return FlSpot(
         value.defaultValue,
         dependentValueFromMass(value).butAs(dependentUnit).defaultValue,
       );
     });
-    yInterval = (data.max() - data.min()) / 5;
+    final yInterval = (data.max() - data.min()) / 5;
+    return ChartData(
+      title: title,
+      startMass: startMass,
+      endMass: endMass,
+      dependentLabel: dependentLabel,
+      dependentUnit: dependentUnit,
+      yInterval: yInterval,
+      data: data,
+    );
   }
 }
 
